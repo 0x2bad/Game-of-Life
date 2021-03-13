@@ -24,14 +24,16 @@ void start_game_of_life(SDL_Renderer *renderer, int w, int h)
     for (;;) {
         SDL_Event e;
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+        // clear with our set color
+        SDL_RenderClear(renderer);
         while (SDL_PollEvent(&e)) {
             if(e.type == SDL_QUIT)
                 return;
-            if((e.type == SDL_KEYDOWN))
+            if((e.type == SDL_KEYDOWN)) {
                 SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+                SDL_RenderFillRect(renderer, &rect);
+            }
         }
-        SDL_RenderClear(renderer);
-        // SDL_RenderFillRect(renderer, &rect);
 
         // Update screen
         SDL_RenderPresent(renderer);
