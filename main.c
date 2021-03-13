@@ -14,21 +14,42 @@
 #define SDL_WHITE = {255, 255, 255, 255};
 
 // https://stackoverflow.com/questions/35165716/sdl-mouse-click
-void mousePress(SDL_MouseButtonEvent* b, SDL_Renderer *renderer)
+void drawPixel_click(SDL_MouseButtonEvent* b, SDL_Renderer* renderer)
 {
     uint32_t x;
     uint32_t y;
-    printf("mouse event detected\n");
+    printf("mouse button event detected\n");
 
     switch (b->button) {
     case SDL_BUTTON_LEFT:
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        printf("left mouse detected\n");
-        break;
+            SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+            printf("left mouse detected\n");
+            break;
     case SDL_BUTTON_RIGHT:
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+            printf("right mouse detected\n");
+            break;
     }
     SDL_GetMouseState(&x, &y);
+    SDL_RenderDrawPoint(renderer, x, y);
+}
+
+void drawPixel_hold(SDL_MouseMotionEvent* b, SDL_Renderer* renderer)
+{
+    uint32_t x;
+    uint32_t y;
+    printf("mouse move event detected\n");
+
+    switch (SDL_GetMouseState(&x, &y)) {
+    case SDL_BUTTON(SDL_BUTTON_LEFT):
+            SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+            break;
+    case SDL_BUTTON(SDL_BUTTON_RIGHT):
+            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+            break;
+    default:
+            return;
+    }
     SDL_RenderDrawPoint(renderer, x, y);
 }
 
@@ -48,11 +69,13 @@ void start_game_of_life(SDL_Renderer *renderer, int w, int h)
         while (SDL_PollEvent(&e)) {
             switch (e.type) {
             case SDL_QUIT:
-                return;
+                    return;
             case SDL_MOUSEBUTTONDOWN:
-                mousePress(&e.button, renderer);
-            //    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-            //    SDL_RenderFillRect(renderer, &rect);
+                    drawPixel_click(&e.button, renderer);
+                    break;
+            case SDL_MOUSEMOTION:
+                    drawPixel_hold(&e.motion, renderer);
+                    break;
             }
         }
 
