@@ -15,7 +15,7 @@
 
 void start_game_of_life(SDL_Renderer *renderer, int w, int h)
 {
-    uint8_t *screen_buffer = calloc(PIXEL_COUNT, 1);
+//    uint8_t *screen_buffer = calloc(PIXEL_COUNT, 1);
 
     FPSmanager fpsmanager;
     SDL_initFramerate(&fpsmanager);
@@ -31,7 +31,7 @@ void start_game_of_life(SDL_Renderer *renderer, int w, int h)
                 SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
         }
         SDL_RenderClear(renderer);
-        SDL_RenderFillRect(renderer, &rect);
+        // SDL_RenderFillRect(renderer, &rect);
 
         // Update screen
         SDL_RenderPresent(renderer);
