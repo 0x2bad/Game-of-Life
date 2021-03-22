@@ -60,7 +60,6 @@ void start_game_of_life(SDL_Renderer *renderer, int w, int h)
     FPSmanager fpsmanager;
     SDL_initFramerate(&fpsmanager);
     SDL_setFramerate(&fpsmanager, 30);
-    SDL_Rect rect = {.x = 8, .y = 16, .w = 32, .h = 64};;
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
     // clear with our set color
     SDL_RenderClear(renderer);
