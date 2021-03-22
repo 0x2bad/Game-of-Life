@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#define WIDTH 5
-#define HEIGHT 6
+#define WIDTH 1920
+#define HEIGHT 1080
 
 void static inline
 compute_row(uint8_t *new, uint8_t *old_top, uint8_t *old_mid, uint8_t *old_bot)
@@ -62,14 +62,14 @@ int main()
     new[12] = 1;
     new[13] = 1;
 
-    for (int i = 0; i < 5; i++) {
-        print_grid(new);
+    for (int i = 0; i < 1000; i++) {
+     //   print_grid(new);
         uint8_t *temp = old;
         old = new;
         new = temp;
         evolve(new, old);
     }
-    print_grid(new);
+ //   print_grid(new);
 }
 
 void print_grid(uint8_t *buff)
