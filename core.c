@@ -4,6 +4,8 @@
 
 #include "core.h"
 
+void (*render_row)(uint64_t);
+
 void static inline
 compute_row(uint8_t *new, uint8_t *old_top, uint8_t *old_mid, uint8_t *old_bot)
 {
@@ -41,42 +43,30 @@ compute_row(uint8_t *new, uint8_t *old_top, uint8_t *old_mid, uint8_t *old_bot)
     }
 }
 
-void evolve(uint8_t *new, uint8_t *old)
+
+uint8_t *GOL_buff;
+uint8_t *old_buff;
+
+__attribute__ ((constructor))
+void init_buffs()
 {
-    for (int i = 0; i < HEIGHT; i++) {
-        compute_row(new + i*WIDTH,
-                    old + (i - 1 + HEIGHT) % HEIGHT * WIDTH, // top
-                    old + i * WIDTH, // middle
-                    old + (i + 1 + HEIGHT) % HEIGHT * WIDTH); // bottom
-    }
+    GOL_buff = calloc(WIDTH*HEIGHT, 1);
+    old_buff = calloc(WIDTH*HEIGHT, 1);
 }
 
-void print_grid(uint8_t *buff);
-
-int main()
+void evolve()
 {
-    uint8_t *new = calloc(WIDTH*HEIGHT, 1);
-    uint8_t *old = calloc(WIDTH*HEIGHT, 1);
-    new[11] = 1;
-    new[12] = 1;
-    new[13] = 1;
-
-    for (int i = 0; i < 1000; i++) {
-     //   print_grid(new);
-        uint8_t *temp = old;
-        old = new;
-        new = temp;
-        evolve(new, old);
+    {// swap buffs
+        uint8_t *temp = GOL_buff;
+        GOL_buff = old_buff;
+        old_buff = temp;
     }
- //   print_grid(new);
-}
 
-void print_grid(uint8_t *buff)
-{
-    for (int i = 0; i < HEIGHT; i++) {
-        for (int j = 0; j < WIDTH; j++)
-            printf((buff[WIDTH*i+j]) ? "1" : "0");
-        printf("\n");
+    for (uint64_t i = 0; i < HEIGHT; i++) {
+        compute_row(GOL_buff + i*WIDTH,
+                    old_buff + (i - 1 + HEIGHT) % HEIGHT * WIDTH, // top
+                    old_buff + i * WIDTH, // middle
+                    old_buff + (i + 1 + HEIGHT) % HEIGHT * WIDTH); // bottom
+        render_row(i);
     }
-    printf("\n");
 }
