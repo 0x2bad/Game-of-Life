@@ -125,13 +125,10 @@ int main(int argc, char *argv[])
     // Start the game
     start_game_of_life(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-    // Destroy renderer
-    SDL_DestroyRenderer(renderer);
-
-    // Destroy window
-    SDL_DestroyWindow(window);
-
-    // Quit SDL
-    SDL_Quit();
+    {// clean up SDL
+        SDL_DestroyRenderer(renderer);
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+    }
 }
 
