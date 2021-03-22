@@ -53,7 +53,7 @@ void drawPixel_hold(SDL_MouseMotionEvent* b, SDL_Renderer* renderer)
     SDL_RenderDrawPoint(renderer, x, y);
 }
 
-void start_drawing(SDL_Renderer *renderer, int w, int h)
+void start_drawing(SDL_Renderer *renderer)
 {
 //  uint8_t *screen_buffer = calloc(PIXEL_COUNT, 1);
 
@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
         return 1;
     }
     // Start the game
-    start_drawing(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
+    start_drawing(renderer);
 
     {// clean up SDL
         SDL_DestroyRenderer(renderer);
