@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#define WIDTH 1920
-#define HEIGHT 1080
+#include "core.h"
 
 void static inline
 compute_row(uint8_t *new, uint8_t *old_top, uint8_t *old_mid, uint8_t *old_bot)
