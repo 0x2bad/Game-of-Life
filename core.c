@@ -4,8 +4,6 @@
 
 #include "core.h"
 
-void (*render_row)(uint64_t);
-
 void static inline
 compute_row(uint8_t *new, uint8_t *old_top, uint8_t *old_mid, uint8_t *old_bot)
 {
@@ -67,6 +65,5 @@ void evolve()
                     old_buff + (i - 1 + HEIGHT) % HEIGHT * WIDTH, // top
                     old_buff + i * WIDTH, // middle
                     old_buff + (i + 1 + HEIGHT) % HEIGHT * WIDTH); // bottom
-        render_row(i);
     }
 }

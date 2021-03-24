@@ -13,13 +13,6 @@
 
 SDL_Renderer *renderer;
 
-void render_row_callback(uint64_t row)
-{
-    for (uint64_t i = 0; i < WIDTH; i++)
-        if (GOL_buff[row*WIDTH + i])
-            SDL_RenderDrawPoint(renderer, i, row);
-}
-
 // https://stackoverflow.com/questions/35165716/sdl-mouse-click
 void drawPixel_click(SDL_MouseButtonEvent* b)
 {
@@ -148,9 +141,6 @@ int main(int argc, char *argv[])
                         "SDL_Error: %s\n", SDL_GetError());
         return 1;
     }
-
-    // Set callback
-    render_row = &render_row_callback;
 
     FPSmanager fpsmanager;
     SDL_initFramerate(&fpsmanager);
