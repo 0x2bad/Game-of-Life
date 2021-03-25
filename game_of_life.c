@@ -89,8 +89,8 @@ uint8_t start_drawing(FPSmanager *fpsmanager)
 
 struct Pixel {
     uint8_t red;
-    uint8_t blue;
     uint8_t green;
+    uint8_t blue;
 };
 
 void start_GOL(FPSmanager* fpsmanager)
