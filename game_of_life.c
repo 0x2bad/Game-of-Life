@@ -134,7 +134,7 @@ void start_GOL(FPSmanager* fpsmanager)
 int main(int argc, char *argv[])
 {
     {// Initialize SDL
-        if(SDL_Init(SDL_INIT_VIDEO) < 0) {
+        if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
             fprintf(stderr, "SDL could not be initialized!\n"
                             "SDL_Error: %s\n", SDL_GetError());
             return 0;
