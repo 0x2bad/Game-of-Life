@@ -100,8 +100,6 @@ void start_GOL(FPSmanager* fpsmanager)
     uint32_t* texture_buff = malloc(HEIGHT*WIDTH*sizeof(uint32_t));
 
     for (;;) {
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-        SDL_RenderClear(renderer);
         SDL_Event e;
         while (SDL_PollEvent(&e))
             if (e.type == SDL_QUIT)
@@ -162,7 +160,7 @@ int main(int argc, char *argv[])
 
     FPSmanager fpsmanager;
     SDL_initFramerate(&fpsmanager);
-    SDL_setFramerate(&fpsmanager, 1);
+    SDL_setFramerate(&fpsmanager, 60);
 
     // Start the game
     if (start_drawing(&fpsmanager))
