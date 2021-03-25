@@ -116,10 +116,10 @@ void start_GOL(FPSmanager* fpsmanager)
         evolve();
 
         for (int i = 0; i < WIDTH*HEIGHT; i++) {
-            uint8_t cell_set = GOL_buff[i] ? 255 : 0;
-            texture_buff[i].red = cell_set;
-            texture_buff[i].blue = cell_set;
-            texture_buff[i].green = cell_set;
+//            uint8_t cell_set = GOL_buff[i] ? 255 : 0;
+            texture_buff[i].red = 255;
+//            texture_buff[i].blue = cell_set;
+//            texture_buff[i].green = cell_set;
         }
 
         SDL_UpdateTexture(texture, NULL, texture_buff, WIDTH*sizeof(struct Pixel));
