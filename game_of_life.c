@@ -87,13 +87,6 @@ uint8_t start_drawing(FPSmanager *fpsmanager)
     }
 }
 
-struct Pixel {
-    uint8_t blue;
-    uint8_t green;
-    uint8_t red;
-    uint8_t alpha;
-};
-
 void start_GOL(FPSmanager* fpsmanager)
 {
     SDL_Texture* texture = SDL_CreateTexture(renderer,
@@ -104,7 +97,7 @@ void start_GOL(FPSmanager* fpsmanager)
     if (texture == NULL)
         fprintf(stderr, "Error: %s\n", SDL_GetError()), exit(1);
 
-    struct Pixel* texture_buff = malloc(HEIGHT*WIDTH*sizeof(struct Pixel));
+    uint32_t* texture_buff = malloc(HEIGHT*WIDTH*sizeof(uint32_t));
 
     for (;;) {
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
@@ -116,14 +109,10 @@ void start_GOL(FPSmanager* fpsmanager)
 
         evolve();
 
-        for (int i = 0; i < WIDTH*HEIGHT; i++) {
-//            uint8_t cell_set = GOL_buff[i] ? 255 : 0;
-            texture_buff[i].red = 255;
-            texture_buff[i].blue = 0;
-            texture_buff[i].green = 0;
-        }
+        for (int i = 0; i < WIDTH*HEIGHT; i++)
+            texture_buff[i] = GOL_buff[i] ? 0xFFFFFFFF : 0;
 
-        SDL_UpdateTexture(texture, NULL, texture_buff, WIDTH*sizeof(struct Pixel));
+        SDL_UpdateTexture(texture, NULL, texture_buff, WIDTH*sizeof(uint32_t));
 
 
         SDL_RenderCopy(renderer, texture, NULL, NULL);
@@ -136,7 +125,6 @@ void start_GOL(FPSmanager* fpsmanager)
 
 int main(int argc, char *argv[])
 {
-    printf("%lu\n", sizeof(struct Pixel));
     {// Initialize SDL
         if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
             fprintf(stderr, "SDL could not be initialized!\n"
