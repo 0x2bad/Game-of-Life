@@ -106,7 +106,7 @@ void start_GOL(FPSmanager* fpsmanager)
     struct Pixel* texture_buff = malloc(HEIGHT*WIDTH*sizeof(struct Pixel));
 
     for (;;) {
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
         SDL_RenderClear(renderer);
         SDL_Event e;
         while (SDL_PollEvent(&e))
@@ -135,6 +135,7 @@ void start_GOL(FPSmanager* fpsmanager)
 
 int main(int argc, char *argv[])
 {
+    printf("%lu\n", sizeof(struct Pixel));
     {// Initialize SDL
         if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
             fprintf(stderr, "SDL could not be initialized!\n"
