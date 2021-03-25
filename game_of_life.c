@@ -170,7 +170,7 @@ int main(int argc, char *argv[])
 
     FPSmanager fpsmanager;
     SDL_initFramerate(&fpsmanager);
-    SDL_setFramerate(&fpsmanager, 60);
+    SDL_setFramerate(&fpsmanager, 1);
 
     // Start the game
     if (start_drawing(&fpsmanager))

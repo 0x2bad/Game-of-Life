@@ -2,8 +2,8 @@
 
 #include <stdint.h>
 
-#define WIDTH 1920
-#define HEIGHT 1080
+#define WIDTH 64
+#define HEIGHT 64
 
 extern uint8_t *GOL_buff;
 extern void (*render_row)(uint64_t);
