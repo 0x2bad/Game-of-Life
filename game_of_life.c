@@ -87,12 +87,27 @@ uint8_t start_drawing(FPSmanager *fpsmanager)
     }
 }
 
-void start_GOL(FPSmanager *fpsmanager)
+struct Pixel {
+    uint8_t red;
+    uint8_t blue;
+    uint8_t green;
+};
+
+void start_GOL(FPSmanager* fpsmanager)
 {
+    SDL_Texture* texture = SDL_CreateTexture(renderer,
+                                             SDL_PIXELFORMAT_RGB888,
+                                             SDL_TEXTUREACCESS_STREAMING,
+                                             WIDTH,
+                                             HEIGHT);
+    if (texture == NULL)
+        fprintf(stderr, "Error: %s\n", SDL_GetError()), exit(1);
+
+    struct Pixel* texture_buff = malloc(HEIGHT*WIDTH*sizeof(struct Pixel));
+
     for (;;) {
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
         SDL_RenderClear(renderer);
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
         SDL_Event e;
         while (SDL_PollEvent(&e))
             if (e.type == SDL_QUIT)
@@ -100,9 +115,20 @@ void start_GOL(FPSmanager *fpsmanager)
 
         evolve();
 
+        for (int i = 0; i < WIDTH*HEIGHT; i++) {
+            uint8_t cell_set = GOL_buff[i] ? 255 : 0;
+            texture_buff[i].red = cell_set;
+            texture_buff[i].blue = cell_set;
+            texture_buff[i].green = cell_set;
+        }
+
+        SDL_UpdateTexture(texture, NULL, texture_buff, WIDTH*sizeof(struct Pixel));
+
         SDL_RenderPresent(renderer);
         SDL_framerateDelay(fpsmanager);
     }
+
+    free(texture_buff);
 }
 
 int main(int argc, char *argv[])
